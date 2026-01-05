@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>東京旅遊規劃 - 專業版</title>
+    <title>東京差旅錦囊 </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
@@ -65,7 +65,7 @@
                             {{ item.typeLabel }}
                         </span>
                         <span v-if="item.time" class="text-slate-400 text-xs flex items-center gap-1">
-                            ⏱️ {{ item.time }}
+                            ⏱️飯店步行 {{ item.time }}
                         </span>
                     </div>
                     <h3 class="text-lg font-bold mb-2 group-hover:text-indigo-600 transition-colors">{{ item.name }}</h3>
@@ -111,11 +111,11 @@
 
             const items = [
                 // 超市 (補全步行時間)
-                { type: 'supermarket', typeLabel: 'Market', name: '成城石井 赤坂Ark Hills店', time: '1 分鐘', desc: '位於飯店所在複合建築內，高品質進口食品首選。', map: 'https://maps.app.goo.gl/q3DRvSNgTwk7sC6y9' },
-                { type: 'supermarket', typeLabel: 'Market', name: '福島屋 六本木店', time: '4 分鐘', desc: '主打職人手作與產地直送，飯糰與熟食評價極高。', map: 'https://maps.app.goo.gl/N1gD6mVGVUE6MYnHA' },
-                { type: 'supermarket', typeLabel: 'Market', name: '肉のハナマサ 赤坂店', time: '9 分鐘', desc: '24小時營業，適合購買大分量水果或深夜食糧。', map: 'https://maps.app.goo.gl/Xed1KkHH1JNg59JH7' },
-                { type: 'supermarket', typeLabel: 'Market', name: '吉池 赤坂店', time: '11 分鐘', desc: '老牌鮮魚超市縮小店，鮮魚與乾貨品質一流。', map: 'https://maps.app.goo.gl/UxB3vwY4X5wr1MRL7' },
-                { type: 'supermarket', typeLabel: 'Market', name: 'My Basket 六本木1丁目', time: '3 分鐘', desc: '小型連鎖超市，適合快速購買飲料與基本日用品。', map: 'https://maps.app.goo.gl/9s98PF3k8P2TGKkx5' },
+                { type: 'supermarket', typeLabel: 'Market', name: '成城石井 赤坂Ark Hills店', time: '2 分鐘', desc: '位於飯店所在複合建築內，高品質進口食品首選。', map: 'https://maps.app.goo.gl/q3DRvSNgTwk7sC6y9' },
+                { type: 'supermarket', typeLabel: 'Market', name: '福島屋 六本木店', time: '5 分鐘', desc: '主打職人手作與產地直送，飯糰與熟食評價極高。', map: 'https://maps.app.goo.gl/N1gD6mVGVUE6MYnHA' },
+                { type: 'supermarket', typeLabel: 'Market', name: '肉のハナマサ 赤坂店', time: '8 分鐘', desc: '24小時營業，適合購買大分量水果或深夜食糧。', map: 'https://maps.app.goo.gl/Xed1KkHH1JNg59JH7' },
+                { type: 'supermarket', typeLabel: 'Market', name: '吉池 赤坂店', time: '10 分鐘', desc: '老牌鮮魚超市縮小店，鮮魚與乾貨品質一流。', map: 'https://maps.app.goo.gl/UxB3vwY4X5wr1MRL7' },
+                { type: 'supermarket', typeLabel: 'Market', name: 'My Basket 六本木1丁目', time: '8 分鐘', desc: '小型連鎖超市，適合快速購買飲料與基本日用品。', map: 'https://maps.app.goo.gl/9s98PF3k8P2TGKkx5' },
                 
                 // 茅乃舍
                 { type: 'kayanoya', typeLabel: 'Kayanoya', name: '東京銀座 茅乃舍', desc: '旗艦規模，品項最全，提供完整試喝體驗。', map: 'https://maps.app.goo.gl/PCkGCX3mXnEJjAHd6' },

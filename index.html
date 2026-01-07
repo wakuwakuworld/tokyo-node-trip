@@ -90,6 +90,9 @@
                             {{ item.typeLabel }}
                         </span>
                         <span v-if="item.time" class="text-slate-400 text-[10px] font-bold">⏱️ 飯店步行 {{ item.time }}</span>
+                        <span v-if="item.tabelog" class="bg-amber-100 text-amber-700 text-[10px] font-black px-2 py-0.5 rounded-md border border-amber-200">
+                            ★ Tabelog {{ item.tabelog }}
+                        </span>
                     </div>
                     <h3 class="text-[17px] font-black mb-2 text-slate-900 leading-tight">{{ item.name }}</h3>
                     
@@ -131,15 +134,19 @@
                 { id: 'all', name: '全部' },
                 { id: 'shopping', name: '商城/購物' },
                 { id: 'ramen', name: '拉麵' },
+                { id: 'sushi', name: '板前壽司' },
+                { id: 'creative', name: '創作料理' },
+                { id: 'yakiniku', name: '燒肉' },
                 { id: 'supermarket', name: '超市' },
                 { id: 'special', name: '行程點' }
             ];
 
             const bottomNav = [
                 { id: 'all', name: '首頁', icon: '🏛️' },
-                { id: 'shopping', name: '逛街', icon: '🛍️' },
+                 { id: 'sushi', name: '壽司', icon: '🍣' },
+                { id: 'yakiniku', name: '燒肉', icon: '🔥' },
                 { id: 'ramen', name: '拉麵', icon: '🍜' },
-                { id: 'supermarket', name: '超市', icon: '🛒' }
+                { id: 'shopping', name: '購物', icon: '🛍️' }
             ];
 
             const flights = [
@@ -234,16 +241,61 @@
                 },
 
                 // 拉麵 (保留)
-                 { type: 'ramen', typeLabel: 'Ramen', name: '入鹿TOKYO 六本木', station: '六本木站 7號出口', desc: '米其林必比登推薦，牛肝菌雞白湯極具特色。', map: 'https://maps.app.goo.gl/WJPPv3qJPTk9tEhE8' },
-                { type: 'ramen', typeLabel: 'Ramen', name: 'AFURI 六本木交差點', station: '六本木站 4號出口', desc: '經典柚子鹽拉麵，清甜爽口，宵夜第一選擇。', map: 'https://maps.app.goo.gl/iewzhxYV6u4X8QUb9' },
-                { type: 'ramen', typeLabel: 'Ramen', name: '銀座 篝 六本木Hills店', station: '六本木站 1C出口', desc: '雞白湯拉麵如濃湯般滑順，口感濃郁迷人。', map: 'https://maps.app.goo.gl/3PzCLCkd9a2h88to6' },
-                { type: 'ramen', typeLabel: 'Ramen', name: 'AFURI 六本木新城', station: '六本木站 1C出口', desc: '環境優雅明亮，用餐體感較交差點分店更舒適。', map: 'https://maps.app.goo.gl/4tsp3xtBhkN4tr81A' },
-                { type: 'ramen', typeLabel: 'Ramen', name: '風雲児 新宿本店', station: '新宿站 6號出口 (大江戶線)', desc: '排隊必吃的魚介沾麵之巔，湯頭濃郁黏口。', map: 'https://maps.app.goo.gl/1VuScqWB1HAwhbPz8' },
-                { type: 'ramen', typeLabel: 'Ramen', name: '金目鯛らぁ麺 鳳仙花', station: '新宿站 東口', desc: '高級金目鯛熬湯，湯頭清甜回甘，層次優雅。', map: 'https://maps.app.goo.gl/pTPLHHCPaKKbZb5AA' },
-                { type: 'ramen', typeLabel: 'Ramen', name: '麺屋海神 新宿店', station: '新宿站 南口', desc: '鮮魚骨每日現熬清湯，口味在新宿自成一格。', map: 'https://maps.app.goo.gl/6Xq3uZttt7qn28Ff6' },
-                { type: 'ramen', typeLabel: 'Ramen', name: '麺屋 翔 本店', station: '新宿站 西口', desc: '神級鹽味拉麵，湯頭清澈見底卻韻味無窮。', map: 'https://maps.app.goo.gl/twmjr11hRG1h5GwLA' },
-                { type: 'ramen', typeLabel: 'Ramen', name: 'RAMEN MATSUI', station: '新宿御苑前站 1號出口', desc: '新興人氣店，湯頭細膩，呈現極致平衡美。', map: 'https://maps.app.goo.gl/F6KiGiBQWP5Sk1rd7' },
-                { type: 'ramen', typeLabel: 'Ramen', name: 'らぁ麺や 嶋', station: '西新宿五丁目站 A2出口', desc: '全日排名頂尖拉麵，湯頭展現職人極致工藝。', map: 'https://maps.app.goo.gl/rQjWoF3aPqHojRHu7' },
+                 { type: 'ramen', typeLabel: 'Ramen', name: '入鹿TOKYO 六本木', station: '六本木站 7號出口', tabelog: '3.85', descArray: ['米其林必比登推薦，牛肝菌雞白湯極具特色。'], map: 'https://maps.app.goo.gl/WJPPv3qJPTk9tEhE8' },
+                { type: 'ramen', typeLabel: 'Ramen', name: 'AFURI 六本木交差點', station: '六本木站 4號出口',tabelog: '3.25', descArray: ['經典柚子鹽拉麵，清甜爽口，宵夜第一選擇。'], map: 'https://maps.app.goo.gl/iewzhxYV6u4X8QUb9' },
+                { type: 'ramen', typeLabel: 'Ramen', name: '銀座 篝 六本木Hills店', station: '六本木站 1C出口',tabelog: '3.54', descArray: ['雞白湯拉麵如濃湯般滑順，口感濃郁迷人。'], map: 'https://maps.app.goo.gl/3PzCLCkd9a2h88to6' },
+                { type: 'ramen', typeLabel: 'Ramen', name: 'AFURI 六本木新城', station: '六本木站 1C出口',tabelog: '3.14', descArray: ['環境優雅明亮，用餐體感較交差點分店更舒適。'], map: 'https://maps.app.goo.gl/4tsp3xtBhkN4tr81A' },
+                { type: 'ramen', typeLabel: 'Ramen', name: '風雲児 新宿本店', station: '新宿站 6號出口 (大江戶線)',tabelog: '3.77', descArray: ['排隊必吃的魚介沾麵之巔，湯頭濃郁黏口。'], map: 'https://maps.app.goo.gl/1VuScqWB1HAwhbPz8' },
+                { type: 'ramen', typeLabel: 'Ramen', name: '金目鯛らぁ麺 鳳仙花', station: '新宿站 東口',tabelog: '3.68', descArray: ['高級金目鯛熬湯，湯頭清甜回甘，層次優雅。'], map: 'https://maps.app.goo.gl/pTPLHHCPaKKbZb5AA' },
+                { type: 'ramen', typeLabel: 'Ramen', name: '麺屋海神 新宿店', station: '新宿站 南口',tabelog: '3.74', descArray: ['鮮魚骨每日現熬清湯，口味在新宿自成一格。'], map: 'https://maps.app.goo.gl/6Xq3uZttt7qn28Ff6' },
+                { type: 'ramen', typeLabel: 'Ramen', name: '麺屋 翔 本店', station: '新宿站 西口',tabelog: '3.78', descArray: ['神級鹽味拉麵，湯頭清澈見底卻韻味無窮。'], map: 'https://maps.app.goo.gl/twmjr11hRG1h5GwLA' },
+                { type: 'ramen', typeLabel: 'Ramen', name: 'RAMEN MATSUI', station: '新宿御苑前站 1號出口',tabelog: '3.84', descArray: ['新興人氣店，湯頭細膩，呈現極致平衡美。'], map: 'https://maps.app.goo.gl/F6KiGiBQWP5Sk1rd7' },
+                { type: 'ramen', typeLabel: 'Ramen', name: 'らぁ麺や 嶋', station: '西新宿五丁目站 A2出口',tabelog: '4.05', descArray: ['全日排名頂尖拉麵，湯頭展現職人極致工藝。'], map: 'https://maps.app.goo.gl/rQjWoF3aPqHojRHu7' },
+              
+               // 板前壽司 (Sushi)
+                { 
+                    type: 'sushi', typeLabel: '板前壽司', name: '江戸前鮨 Sushi Bar Mugen ∞', tabelog: '3.67', 
+                    descArray: [
+                        '離飯店、辦公室步行僅 5 分鐘。',
+                        '獨特「江戶前鮨 × 音樂」五感體驗，品嚐正宗壽司同時享受主廚精選音樂。',
+                        '桌布印有當日 BGM 歌單 QR Code 可供收藏。'
+                    ], 
+                    station: '步行至飯店/公司約 5 分鐘', map: 'https://maps.app.goo.gl/JR77iYn3ehf7Ro6QA' 
+                },
+                { 
+                    type: 'sushi', typeLabel: '板前壽司', name: '鮨 いつみ', tabelog: '3.65', 
+                    descArray: [
+                        '名店「鮨 くりや川」的姊妹店。',
+                        '保留本尊的華麗風格，但價格不到本店的一半，CP 值極高。'
+                    ], 
+                    station: '赤坂一帶', map: 'https://maps.app.goo.gl/YHjjPv5UnffHyLEz7' 
+                },
+
+                // 創作料理 (Creative)
+                { 
+                    type: 'creative', typeLabel: '創作料理', name: 'The Jade Room + Garden Terrace', tabelog: '3.48', 
+                    descArray: [
+                        '米其林星級主廚坐鎮，結合精緻美學。',
+                        '戶外露台是觀賞東京鐵塔近景的絕佳地點。'
+                    ], 
+                    station: '神谷町站直通', map: 'https://maps.app.goo.gl/iV12N8BCmqak92zK6' 
+                },
+
+                // 燒肉 (Yakiniku)
+                { type: 'yakiniku', typeLabel: '燒肉', name: '焼肉ホルモン金樹 はなれ', tabelog: '3.67', descArray: ['焼肉ホルモン金樹 2 號店，高品質內臟與肉品。'], map: 'https://maps.app.goo.gl/DVKftYnPsbrZhqmx9' },
+                { type: 'yakiniku', typeLabel: '燒肉', name: '赤坂大関 本店', tabelog: '3.65', descArray: ['赤坂地區老牌好評燒肉。'], map: 'https://maps.app.goo.gl/emLHZV5fSF31kVRK6' },
+                { type: 'yakiniku', typeLabel: '燒肉', name: '焼肉 ホルモンCHINTAN 赤坂見附店', tabelog: '3.60', descArray: ['現代化風格燒肉店。'], map: 'https://maps.app.goo.gl/yYzvyLdLefpWnLj6A' },
+                { type: 'yakiniku', typeLabel: '燒肉', name: 'おやじのおとうと', tabelog: '3.59', descArray: ['深受當地商務人士喜愛的實力派燒肉。'], map: 'https://maps.app.goo.gl/ndJARciHf2qb1fxd6' },
+                { type: 'yakiniku', typeLabel: '燒肉', name: '焼肉山水 虎ノ門ヒルズ店', tabelog: '3.60', descArray: ['位於虎之門 Hills 內，環境舒適高雅。'], map: 'https://maps.app.goo.gl/Sg4sps4vEuKAkC6k7' },
+                { 
+                    type: 'yakiniku', typeLabel: '燒肉', name: '焼肉ホルモン 山水縁 虎ノ門本店', tabelog: '3.48', 
+                    descArray: [
+                        '社群媒體話題名物：厚切生牛舌包蔥鹽（ネギ包み焼き）。',
+                        '視覺與味覺的雙重饗宴。'
+                    ], 
+                    map: 'https://maps.app.goo.gl/XJtfkSCsDZg57bYR9' 
+                },
+
 
                 // 超市 (保留 1-5)
                 { type: 'supermarket', typeLabel: 'Market', name: '成城石井 赤坂Ark Hills店', time: '1 分鐘', descArray: ['高品質飯店共構超市。'], map: 'https://maps.app.goo.gl/q3DRvSNgTwk7sC6y9' },

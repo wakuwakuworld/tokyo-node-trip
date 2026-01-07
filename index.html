@@ -8,24 +8,23 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Noto Sans TC', sans-serif; -webkit-tap-highlight-color: transparent; letter-spacing: -0.01em; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         [v-cloak] { display: none; }
-        .flight-path { position: relative; }
-        .flight-path::after { content: ''; position: absolute; left: 50%; top: 50%; width: 60%; height: 1px; border-top: 2 dashed #CBD5E1; transform: translate(-50%, -50%); z-index: 0; }
+        .bg-flight { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased pb-24">
+<body class="bg-slate-50 text-slate-800 antialiased pb-28">
 
 <div id="app" v-cloak>
-    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div class="max-w-md mx-auto px-4 h-14 flex items-center justify-between">
-            <h1 class="text-lg font-black tracking-tighter text-indigo-900">TOKYO <span class="text-amber-500">2026</span></h1>
+            <h1 class="text-lg font-black tracking-tighter text-indigo-900">TOKYO <span class="text-amber-500 italic">2026</span></h1>
             <nav class="flex gap-2 overflow-x-auto no-scrollbar ml-4 py-1">
                 <button v-for="tab in categories" :key="tab.id" 
                         @click="activeTab = tab.id"
-                        :class="['px-3 py-1.5 rounded-full text-xs font-bold transition-all whitespace-nowrap', 
+                        :class="['px-3 py-1.5 rounded-full text-[11px] font-black transition-all whitespace-nowrap uppercase tracking-wider', 
                         activeTab === tab.id ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-100 text-slate-500']">
                     {{ tab.name }}
                 </button>
@@ -35,32 +34,28 @@
 
     <main class="max-w-md mx-auto px-4 py-5">
         
-        <section v-if="activeTab === 'all' || activeTab === 'flight'" class="mb-6">
-            <h2 class="text-sm font-black mb-3 flex items-center gap-2 text-slate-400 uppercase tracking-widest">
-                Flight Details
-            </h2>
+        <section v-if="activeTab === 'all' || activeTab === 'flight'" class="mb-8">
+            <h2 class="text-[11px] font-black mb-3 flex items-center gap-2 text-slate-400 uppercase tracking-[0.15em]">Flight Information</h2>
             <div class="space-y-4">
-                <div v-for="flight in flights" :key="flight.code" class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
-                    <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-50">
-                        <span class="text-xs font-black bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded italic">{{ flight.code }}</span>
-                        <span class="text-xs font-bold text-slate-400">{{ flight.date }}</span>
+                <div v-for="flight in flights" :key="flight.code" class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+                    <div class="bg-slate-900 px-4 py-2 flex justify-between items-center">
+                        <span class="text-white text-[11px] font-black tracking-widest italic">{{ flight.code }}</span>
+                        <span class="text-slate-400 text-[11px] font-bold">{{ flight.date }}</span>
                     </div>
-                    
-                    <div class="flex justify-between items-center relative">
-                        <div class="z-10 bg-white">
-                            <p class="text-2xl font-black leading-none mb-1 text-slate-900">{{ flight.depTime }}</p>
-                            <p class="text-xs font-bold text-slate-500">{{ flight.depCity }}</p>
-                            <p class="text-[10px] text-slate-400 font-medium">{{ flight.depAirport }} (航廈{{ flight.depTerm }})</p>
+                    <div class="p-5 flex justify-between items-center">
+                        <div class="flex-1">
+                            <p class="text-2xl font-black leading-none mb-1">{{ flight.depTime }}</p>
+                            <p class="text-[13px] font-bold text-slate-600">{{ flight.depCity }}</p>
+                            <p class="text-[10px] text-slate-400 font-medium">{{ flight.depAirport }} {{ flight.depTerm }}</p>
                         </div>
-                        
-                        <div class="absolute left-1/2 -translate-x-1/2 text-slate-200">
-                            <span class="text-lg">✈️</span>
+                        <div class="flex-none px-4 flex flex-col items-center">
+                            <span class="text-slate-200 text-xl">✈️</span>
+                            <div class="w-12 h-[1px] bg-slate-100 mt-2"></div>
                         </div>
-
-                        <div class="z-10 bg-white text-right">
-                            <p class="text-2xl font-black leading-none mb-1 text-slate-900">{{ flight.arrTime }}</p>
-                            <p class="text-xs font-bold text-slate-500">{{ flight.arrCity }}</p>
-                            <p class="text-[10px] text-slate-400 font-medium">{{ flight.arrAirport }} (航廈{{ flight.arrTerm }})</p>
+                        <div class="flex-1 text-right">
+                            <p class="text-2xl font-black leading-none mb-1">{{ flight.arrTime }}</p>
+                            <p class="text-[13px] font-bold text-slate-600">{{ flight.arrCity }}</p>
+                            <p class="text-[10px] text-slate-400 font-medium">{{ flight.arrAirport }} {{ flight.arrTerm }}</p>
                         </div>
                     </div>
                 </div>
@@ -68,65 +63,59 @@
         </section>
 
         <section v-if="activeTab === 'all' || activeTab === 'hotel'" class="mb-8">
-            <h2 class="text-sm font-black mb-3 flex items-center gap-2 text-slate-400 uppercase tracking-widest">Accommodation</h2>
-            <div class="bg-indigo-900 rounded-[1.5rem] overflow-hidden shadow-lg text-white">
+            <h2 class="text-[11px] font-black mb-3 flex items-center gap-2 text-slate-400 uppercase tracking-[0.15em]">Home Base</h2>
+            <div class="bg-indigo-950 rounded-[2rem] overflow-hidden shadow-xl text-white">
                 <div class="p-6">
                     <h3 class="text-xl font-black mb-2">{{ hotel.name }}</h3>
-                    <p class="text-indigo-100/80 text-[13px] leading-relaxed mb-6">{{ hotel.reason }}</p>
-                    
-                    <div class="grid grid-cols-1 gap-2">
-                        <a :href="hotel.map" target="_blank" class="bg-white text-indigo-900 h-11 rounded-xl text-xs font-black flex items-center justify-center gap-2 active:scale-[0.98] transition-all">
-                            📍 開啟 Google Map 飯店位置
+                    <p class="text-indigo-200/80 text-[13px] leading-relaxed mb-6">{{ hotel.reason }}</p>
+                    <div class="space-y-2">
+                        <a :href="hotel.map" target="_blank" class="bg-white text-indigo-900 h-12 rounded-2xl text-[13px] font-black flex items-center justify-center gap-2 active:scale-[0.97] transition-all">
+                            📍 飯店 Google Map
                         </a>
-                        <a :href="hotel.bus" target="_blank" class="bg-indigo-700 text-white h-11 rounded-xl text-xs font-black flex items-center justify-center gap-2 border border-indigo-500 active:scale-[0.98] transition-all">
-                            🚌 機場利木津巴士時刻表
+                        <a :href="hotel.bus" target="_blank" class="bg-indigo-800 text-white h-12 rounded-2xl text-[13px] font-black flex items-center justify-center gap-2 border border-indigo-700 active:scale-[0.97] transition-all">
+                            🚌 利木津巴士時刻表
                         </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div v-if="activeTab !== 'flight'" class="space-y-4">
+        <div v-if="activeTab !== 'flight'" class="space-y-5">
+            <h2 class="text-[11px] font-black mb-1 flex items-center gap-2 text-slate-400 uppercase tracking-[0.15em]">Destination List</h2>
             <div v-for="item in filteredItems" :key="item.name" 
-                 class="bg-white rounded-2xl border border-slate-200 overflow-hidden active:bg-slate-50 transition-colors">
+                 class="bg-white rounded-[1.8rem] border border-slate-200 overflow-hidden shadow-sm active:bg-slate-50 transition-all">
                 <div class="p-5">
-                    <div class="flex justify-between items-start mb-2">
-                        <span :class="['text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-tighter', categoryColor(item.type)]">
+                    <div class="flex justify-between items-start mb-3">
+                        <span :class="['text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider', categoryColor(item.type)]">
                             {{ item.typeLabel }}
                         </span>
-                        <span v-if="item.time" class="text-slate-400 text-[10px] font-bold">
-                            ⏱️飯店步行 {{ item.time }}
-                        </span>
+                        <span v-if="item.time" class="text-slate-400 text-[10px] font-bold">⏱️ 飯店步行 {{ item.time }}</span>
                     </div>
-                    <h3 class="text-base font-black mb-2 text-slate-900">{{ item.name }}</h3>
-                    <p class="text-slate-500 text-[13px] leading-snug mb-4">{{ item.desc }}</p>
+                    <h3 class="text-[17px] font-black mb-2 text-slate-900 leading-tight">{{ item.name }}</h3>
                     
-                    <div v-if="item.station" class="mb-4 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                        <p class="text-[9px] text-slate-400 mb-1 font-black uppercase tracking-widest">Station Exit</p>
-                        <p class="text-xs font-bold text-slate-700">🚉 {{ item.station }}</p>
+                    <div class="text-slate-500 text-[14px] leading-[1.6] space-y-2 mb-5">
+                        <p v-for="p in item.descArray" :key="p">{{ p }}</p>
+                    </div>
+                    
+                    <div v-if="item.station" class="mb-5 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                        <p class="text-[9px] text-slate-400 mb-1 font-black uppercase tracking-[0.1em]">Access</p>
+                        <p class="text-[12px] font-bold text-slate-700">🚉 {{ item.station }}</p>
                     </div>
 
                     <a :href="item.map" target="_blank" 
-                       class="flex items-center justify-center h-12 bg-slate-900 text-white rounded-xl font-black text-xs tracking-widest active:scale-95 transition-all shadow-sm">
-                        GOOGLE MAP 導航
+                       class="flex items-center justify-center h-12 bg-slate-900 text-white rounded-2xl font-black text-[12px] tracking-[0.1em] active:scale-95 transition-all shadow-md">
+                        開啟 GOOGLE MAP 導航
                     </a>
                 </div>
             </div>
         </div>
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-slate-200 flex justify-around items-center h-16 px-2 z-50 shadow-2xl">
-        <button @click="activeTab = 'all'" :class="['flex flex-col items-center flex-1', activeTab === 'all' ? 'text-indigo-600' : 'text-slate-400']">
-            <span class="text-xl">🏛️</span><span class="text-[9px] font-bold mt-1">首頁</span>
-        </button>
-        <button @click="activeTab = 'ramen'" :class="['flex flex-col items-center flex-1', activeTab === 'ramen' ? 'text-indigo-600' : 'text-slate-400']">
-            <span class="text-xl">🍜</span><span class="text-[9px] font-bold mt-1">拉麵</span>
-        </button>
-        <button @click="activeTab = 'supermarket'" :class="['flex flex-col items-center flex-1', activeTab === 'supermarket' ? 'text-indigo-600' : 'text-slate-400']">
-            <span class="text-xl">🛒</span><span class="text-[9px] font-bold mt-1">超市</span>
-        </button>
-        <button @click="activeTab = 'shopping'" :class="['flex flex-col items-center flex-1', activeTab === 'shopping' ? 'text-indigo-600' : 'text-slate-400']">
-            <span class="text-xl">🛍️</span><span class="text-[9px] font-bold mt-1">購物</span>
+    <nav class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-slate-200 flex justify-around items-center h-20 px-4 z-50 shadow-2xl pb-4">
+        <button v-for="nav in bottomNav" :key="nav.id" @click="activeTab = nav.id"
+                :class="['flex flex-col items-center flex-1 transition-all', activeTab === nav.id ? 'text-indigo-600 scale-110' : 'text-slate-400']">
+            <span class="text-xl mb-1">{{ nav.icon }}</span>
+            <span class="text-[10px] font-black tracking-tighter">{{ nav.name }}</span>
         </button>
     </nav>
 </div>
@@ -140,23 +129,29 @@
 
             const categories = [
                 { id: 'all', name: '全部' },
-                { id: 'supermarket', name: '超市' },
-                { id: 'kayanoya', name: '茅乃舍' },
+                { id: 'shopping', name: '商城/購物' },
                 { id: 'ramen', name: '拉麵' },
-                { id: 'shopping', name: '購物' },
-                { id: 'special', name: '行程' }
+                { id: 'supermarket', name: '超市' },
+                { id: 'special', name: '行程點' }
+            ];
+
+            const bottomNav = [
+                { id: 'all', name: '首頁', icon: '🏛️' },
+                { id: 'shopping', name: '逛街', icon: '🛍️' },
+                { id: 'ramen', name: '拉麵', icon: '🍜' },
+                { id: 'supermarket', name: '超市', icon: '🛒' }
             ];
 
             const flights = [
                 { 
                     date: '2026年 01月 11日', code: 'CI0100', 
-                    depTime: '09:30', depCity: '台北 (桃園)', depAirport: 'TPE', depTerm: '2',
-                    arrTime: '13:30', arrCity: '東京 (成田)', arrAirport: 'NRT', arrTerm: '2'
+                    depTime: '09:30', depCity: '台北 (桃園)', depAirport: 'TPE', depTerm: '航廈 2',
+                    arrTime: '13:30', arrCity: '東京 (成田)', arrAirport: 'NRT', arrTerm: '航廈 2'
                 },
                 { 
                     date: '2026年 01月 14日', code: 'CI0101', 
-                    depTime: '14:35', depCity: '東京 (成田)', depAirport: 'NRT', depTerm: '2',
-                    arrTime: '17:45', arrCity: '台北 (桃園)', arrAirport: 'TPE', arrTerm: '2'
+                    depTime: '14:35', depCity: '東京 (成田)', depAirport: 'NRT', depTerm: '航廈 2',
+                    arrTime: '17:45', arrCity: '台北 (桃園)', arrAirport: 'TPE', arrTerm: '航廈 2'
                 }
             ];
 
@@ -164,26 +159,82 @@
                 name: "東京全日空洲際酒店",
                 map: "https://maps.app.goo.gl/NhH9gV4tHdXSpsLe9",
                 bus: "https://www.limousinebus.co.jp/zh-tw/busstop/detail/ANAInterContinentalTokyo/",
-                reason: "如果您不希望搬行李且預算充裕，住這裡最舒適。雖然購物需搭地鐵，但休息品質最好。"
+                reason: "如果您不希望搬行李且預算充裕，住這裡最舒適。飯店門口即有機場利木津巴士直達。"
             };
 
             const items = [
-                // 超市 (保留 1-5)
-                { type: 'supermarket', typeLabel: 'Market', name: '成城石井 赤坂Ark Hills店', time: '2 分鐘', desc: '位於飯店複合建築內，採買高品質食品、美酒極其便利。', map: 'https://maps.app.goo.gl/q3DRvSNgTwk7sC6y9' },
-                { type: 'supermarket', typeLabel: 'Market', name: '福島屋 六本木店', time: '5 分鐘', desc: '主打職人手作與產地直送，飯糰與精緻熟食是亮點。', map: 'https://maps.app.goo.gl/N1gD6mVGVUE6MYnHA' },
-                { type: 'supermarket', typeLabel: 'Market', name: '肉のハナマサ 赤坂店', time: '8 分鐘', desc: '24小時營業，適合購買大份量水果或深夜肉類宵夜。', map: 'https://maps.app.goo.gl/Xed1KkHH1JNg59JH7' },
-                { type: 'supermarket', typeLabel: 'Market', name: '吉池 赤坂店', time: '10 分鐘', desc: '老牌鮮魚超市，提供高品質海鮮乾貨與季節性食材。', map: 'https://maps.app.goo.gl/UxB3vwY4X5wr1MRL7' },
-                { type: 'supermarket', typeLabel: 'Market', name: 'My Basket 六本木1丁目', time: '8 分鐘', desc: 'AEON旗下的小型超市，買水、買飲品最平價的選擇。', map: 'https://maps.app.goo.gl/9s98PF3k8P2TGKkx5' },
-                
-                // 茅乃舍 (保留 6-10)
-                { type: 'kayanoya', typeLabel: 'Kayanoya', name: '東京銀座 茅乃舍', desc: '旗艦規模，品項最全，提供完整的試喝服務。', map: 'https://maps.app.goo.gl/PCkGCX3mXnEJjAHd6' },
-                { type: 'kayanoya', typeLabel: 'Kayanoya', name: '茅乃舍 高島屋新宿店', desc: '新宿百貨核心，適合逛街時順手補齊高級高湯包。', map: 'https://maps.app.goo.gl/8YC6YyDB2xH6DuBR9' },
-                { type: 'kayanoya', typeLabel: 'Kayanoya', name: '茅乃舍 東京中城店', desc: '離飯店最近的高質感店鋪，位於六本木 Midtown。', map: 'https://maps.app.goo.gl/cQnPj2NEefT4QRRd6' },
-                { type: 'kayanoya', typeLabel: 'Kayanoya', name: '茅乃舎分店 アトレ恵比寿', desc: '惠比壽站內交通便利，適合轉車空檔採買。', map: 'https://maps.app.goo.gl/QVmRmyFL2s54opbN9' },
-                { type: 'kayanoya', typeLabel: 'Kayanoya', name: '茅乃舎 東京駅店', desc: '東京車站地下街，離開東京前最後的補貨熱點。', map: 'https://maps.app.goo.gl/mWMGyCHj8NxSJgyNA' },
+                // 逛街商城 (優化描述)
+                { 
+                    type: 'shopping', typeLabel: 'Shopping Mall', name: '六本木Hills (Roppongi Hills)', 
+                    descArray: [
+                        '匯集頂級精品、時尚服飾與美術館的綜合設施。',
+                        '一月冬季折扣低至三折，是入手 Zara 或國際精品的好時機。',
+                        '必看大蜘蛛裝置藝術 Maman 與森大樓冬日氛圍。'
+                    ], 
+                    station: '六本木站 1C 出口直通', map: 'https://maps.app.goo.gl/Waeg9PRy21hShayH6' 
+                },
+                { 
+                    type: 'shopping', typeLabel: 'Shopping Mall', name: 'Tokyo Midtown (東京中城)', 
+                    descArray: [
+                        '結合美學、綠地與購物的複合商城，約有 110 家精品與選物店。',
+                        '包含：三宅一生 (Issey Miyake)、吉田包 (Porter)、無印良品、Uniqlo 與中川政七商店。',
+                        '一月特賣高峰期，適合採購高品質生活風格品牌。'
+                    ], 
+                    station: '六本木站 8 號出口直通', map: 'https://maps.app.goo.gl/J45f7oosf2bxz4zt8' 
+                },
+                { type: 'shopping', typeLabel: 'Shopping Mall', name: '麻布台之丘', descArray: ['2024最新地標，匯集奢華零售與當代藝術空間'], station: '神谷町站 5號 出口步行 5 分', map: 'https://maps.app.goo.gl/aAZGKT3poZstFoe57' },
+                { 
+                    type: 'shopping', typeLabel: 'Shopping Mall', name: 'GINZA SIX', 
+                    descArray: [
+                        '銀座最高級的旗艦商城，建築美學與當代藝術完美融合。',
+                        '擁有蔦屋書店 Ginza 與眾多奢侈品牌限定店。'
+                    ], 
+                    station: '銀座站 A3 出口步行 2 分', map: 'https://maps.app.goo.gl/w7R6HxBpcd8szXNN6' 
+                },
+                { type: 'shopping', typeLabel: 'Shopping Mall', name: '銀座三越', descArray: ['銀座地標百貨，國際品牌與高品質服務的集合。'], station: '銀座站 A6 出口步行 1 分', map: 'https://maps.app.goo.gl/XTrXf4dP2NrU4a6x9' },
+                { 
+                    type: 'shopping', typeLabel: 'Shopping Mall', name: '東急PLAZA 銀座 (Tokyu Plaza Ginza)', 
+                    descArray: [
+                        '獨特的江戶切子玻璃建築外觀，擁有免稅店與高品質日系雜貨。'
+                    ], 
+                    station: '銀座站 C2 / C3 出口步行 1 分', map: 'https://maps.app.goo.gl/4ScN1ZkayT8vGJRP8' 
+                },
+                { 
+                    type: 'shopping', typeLabel: 'Shopping Mall', name: '有樂町丸井 (Marui)', 
+                    descArray: [
+                        '日系流行服飾與生活雜貨，適合尋找最新時尚單品。'
+                    ], 
+                    station: '有樂町站 中央口步行 1 分', map: 'https://maps.app.goo.gl/3JPQpEbWRj2jCMhW6' 
+                },
+                { 
+                    type: 'shopping', typeLabel: 'Flagship Store', name: '無印良品 銀座 (MUJI Ginza)', 
+                    descArray: [
+                        '無印良品全球旗艦店，包含 MUJI Diner 與豐富的銀座限定商品。'
+                    ], 
+                    station: '銀座一丁目站 5 號出口步行 3 分', map: 'https://maps.app.goo.gl/23towaWvFy3GHvC86' 
+                },
+                { 
+                    type: 'shopping', typeLabel: 'Flagship Store', name: 'UNIQLO 銀座旗艦店', 
+                    descArray: [
+                        '高達 12 層樓的全球旗艦店，品項最齊全，還有專屬咖啡廳。'
+                    ], 
+                    station: '銀座站 A2 出口步行 4 分', map: 'https://maps.app.goo.gl/mbcJkNWnTeQYPEi67' 
+                },
+                { 
+                    type: 'shopping', typeLabel: 'Lifestyle', name: '銀座 Loft', 
+                    descArray: [
+                        '各式文具、美妝與居家質感雜貨的採購天堂。'
+                    ], 
+                    station: '銀座站 C8 / C9 出口步行 3 分', map: 'https://maps.app.goo.gl/iix3H8dDWFfWFc139' 
+                },
+                { 
+                    type: 'shopping', typeLabel: 'Shopping Mall', name: '新宿 LUMINE 1/2/EST', 
+                    descArray: ['L1 洗練、L2 潮流、EST 年輕化，是新宿逛街的核心地帶。'], 
+                    map: 'https://maps.app.goo.gl/cucVivxC9ZtuN2uX6' 
+                },
 
-                // 拉麵 (保留 11-20，補全地鐵)
-                { type: 'ramen', typeLabel: 'Ramen', name: '入鹿TOKYO 六本木', station: '六本木站 7號出口', desc: '米其林必比登推薦，牛肝菌雞白湯極具特色。', map: 'https://maps.app.goo.gl/WJPPv3qJPTk9tEhE8' },
+                // 拉麵 (保留)
+                 { type: 'ramen', typeLabel: 'Ramen', name: '入鹿TOKYO 六本木', station: '六本木站 7號出口', desc: '米其林必比登推薦，牛肝菌雞白湯極具特色。', map: 'https://maps.app.goo.gl/WJPPv3qJPTk9tEhE8' },
                 { type: 'ramen', typeLabel: 'Ramen', name: 'AFURI 六本木交差點', station: '六本木站 4號出口', desc: '經典柚子鹽拉麵，清甜爽口，宵夜第一選擇。', map: 'https://maps.app.goo.gl/iewzhxYV6u4X8QUb9' },
                 { type: 'ramen', typeLabel: 'Ramen', name: '銀座 篝 六本木Hills店', station: '六本木站 1C出口', desc: '雞白湯拉麵如濃湯般滑順，口感濃郁迷人。', map: 'https://maps.app.goo.gl/3PzCLCkd9a2h88to6' },
                 { type: 'ramen', typeLabel: 'Ramen', name: 'AFURI 六本木新城', station: '六本木站 1C出口', desc: '環境優雅明亮，用餐體感較交差點分店更舒適。', map: 'https://maps.app.goo.gl/4tsp3xtBhkN4tr81A' },
@@ -194,27 +245,27 @@
                 { type: 'ramen', typeLabel: 'Ramen', name: 'RAMEN MATSUI', station: '新宿御苑前站 1號出口', desc: '新興人氣店，湯頭細膩，呈現極致平衡美。', map: 'https://maps.app.goo.gl/F6KiGiBQWP5Sk1rd7' },
                 { type: 'ramen', typeLabel: 'Ramen', name: 'らぁ麺や 嶋', station: '西新宿五丁目站 A2出口', desc: '全日排名頂尖拉麵，湯頭展現職人極致工藝。', map: 'https://maps.app.goo.gl/rQjWoF3aPqHojRHu7' },
 
-                // 購物 (保留 21-25)
-                { type: 'shopping', typeLabel: 'Mall', name: '銀座三越', desc: '銀座地標百貨，國際品牌與高品質服務的集合。', map: 'https://maps.app.goo.gl/XTrXf4dP2NrU4a6x9' },
-                { type: 'shopping', typeLabel: 'Mall', name: '東京中城 (Midtown)', desc: '六本木質感購物，擁有大量選物店與藝術設計氣息。', map: 'https://maps.app.goo.gl/J45f7oosf2bxz4zt8' },
-                { type: 'shopping', typeLabel: 'Mall', name: '六本木之丘 (Hills)', desc: '集潮流、精品與展望台於一身，是六本木必遊地標。', map: 'https://maps.app.goo.gl/Waeg9PRy21hShayH6' },
-                { type: 'shopping', typeLabel: 'Mall', name: '麻布台之丘', desc: '2024最新地標，匯集奢華零售與當代藝術空間。', map: 'https://maps.app.goo.gl/aAZGKT3poZstFoe57' },
-                { type: 'shopping', typeLabel: 'Mall', name: '新宿 LUMINE 1/2/EST', desc: 'L1優雅、L2潮流、EST年輕化且有豐富美食街選擇。', map: 'https://maps.app.goo.gl/cucVivxC9ZtuN2uX6' },
+                // 超市 (保留 1-5)
+                { type: 'supermarket', typeLabel: 'Market', name: '成城石井 赤坂Ark Hills店', time: '1 分鐘', descArray: ['高品質飯店共構超市。'], map: 'https://maps.app.goo.gl/q3DRvSNgTwk7sC6y9' },
+                { type: 'supermarket', typeLabel: 'Market', name: '福島屋 六本木店', time: '4 分鐘', descArray: ['職人手作熟食極其出色。'], map: 'https://maps.app.goo.gl/N1gD6mVGVUE6MYnHA' },
+                { type: 'supermarket', typeLabel: 'Market', name: '肉のハナマサ 赤坂店', time: '8 分鐘', desc: '24小時營業，適合購買大份量水果或深夜肉類宵夜。', map: 'https://maps.app.goo.gl/Xed1KkHH1JNg59JH7' },
+                { type: 'supermarket', typeLabel: 'Market', name: '吉池 赤坂店', time: '10 分鐘', desc: '老牌鮮魚超市，提供高品質海鮮乾貨與季節性食材。', map: 'https://maps.app.goo.gl/UxB3vwY4X5wr1MRL7' },
+                { type: 'supermarket', typeLabel: 'Market', name: 'My Basket 六本木1丁目', time: '8 分鐘', desc: 'AEON旗下的小型超市，買水、買飲品最平價的選擇。', map: 'https://maps.app.goo.gl/9s98PF3k8P2TGKkx5' },
 
-                // 指定 (保留 26-27)
-                { type: 'special', typeLabel: 'Spot', name: 'Warner Music Japan', station: '方舟之丘 南塔', desc: '重要行程點，就在飯店過馬路即達，非常方便。', map: 'https://maps.app.goo.gl/JuQ6FhKy6UavRus99' },
-                { type: 'special', typeLabel: 'Spot', name: 'TOKYO NODE', station: '虎之門 Hills 45F', desc: '前衛數位藝術與高空視野展示空間。', map: 'https://maps.app.goo.gl/FAHajWLP3r7vo6Yj9' }
+                // 指定 (26-27)
+                { type: 'special', typeLabel: 'Spot', name: 'Warner Music Japan', station: '方舟之丘 南塔', descArray: ['飯店對面重要行程點。'], map: 'https://maps.app.goo.gl/JuQ6FhKy6UavRus99' },
+                { type: 'special', typeLabel: 'Spot', name: 'TOKYO NODE', station: '虎之門 Hills 45F', descArray: ['前衛數位藝術展示空間。'], map: 'https://maps.app.goo.gl/FAHajWLP3r7vo6Yj9' }
             ];
 
             const filteredItems = computed(() => {
                 if (activeTab.value === 'all') return items;
-                return items.filter(item => item.type === activeTab.value);
+                if (activeTab.value === 'flight') return [];
+                return items.filter(item => item.type === activeTab.value || (activeTab.value === 'shopping' && item.type === 'shopping'));
             });
 
             const categoryColor = (type) => {
                 const colors = {
                     supermarket: 'bg-green-100 text-green-700',
-                    kayanoya: 'bg-amber-100 text-amber-700',
                     ramen: 'bg-rose-100 text-rose-700',
                     shopping: 'bg-blue-100 text-blue-700',
                     special: 'bg-purple-100 text-purple-700'
@@ -222,7 +273,7 @@
                 return colors[type] || 'bg-slate-100 text-slate-700';
             };
 
-            return { activeTab, categories, flights, hotel, filteredItems, categoryColor };
+            return { activeTab, categories, bottomNav, flights, hotel, filteredItems, categoryColor };
         }
     }).mount('#app');
 </script>
